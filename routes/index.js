@@ -20,4 +20,13 @@ router.get('/create_table', function(req, res, next) {
   service.createTable(req, res);
 });
 
+router.post('/lookup_url', function(req, res) {
+  service.lookupFromTable(req.body.param_lookup_name, res)
+});
+
+router.get('/delete_table', function(req, res, next) {
+  service.deleteTable();
+  res.redirect('/');
+});
+
 module.exports = router;

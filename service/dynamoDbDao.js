@@ -8,23 +8,20 @@ AWS.config.update({
 var dynamodb = new AWS.DynamoDB();
 var docClient = new AWS.DynamoDB.DocumentClient();
 
-var params = {
-    TableName : "Lookup",
-    KeySchema: [
-        { AttributeName: "name", KeyType: "HASH"},  //Partition key
-        { AttributeName: "email", KeyType: "RANGE" }  //Sort key
-    ],
-    AttributeDefinitions: [
-        { AttributeName: "name", AttributeType: "S" },
-        { AttributeName: "email", AttributeType: "S" }
-    ],
-    ProvisionedThroughput: {
-        ReadCapacityUnits: 1,
-        WriteCapacityUnits: 1
-    }
-};
-
 exports.createTable = function(req, res) {
+  var params = {
+      TableName : "Lookup",
+      KeySchema: [
+          { AttributeName: "name", KeyType: "HASH"},  //Partition key
+      ],
+      AttributeDefinitions: [
+          { AttributeName: "name", AttributeType: "S" },
+      ],
+      ProvisionedThroughput: {
+          ReadCapacityUnits: 1,
+          WriteCapacityUnits: 1
+      }
+  };
   dynamodb.createTable(params, function(err, data) {
       if (err) {
           console.error("Unable to create table. Error JSON:", JSON.stringify(err, null, 2));
@@ -50,4 +47,35 @@ exports.addToTable = function(name, email) {
           console.log("PutItem succeeded:", email);
       }
    });
+}
+
+exports.lookupFromTable = function(name, res) {
+  var params = {
+    TableName: "Lookup",
+    Key:{
+        "name": name
+    }
+  };
+  docClient.get(params, function(err, data) {
+    if (err) {
+        console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
+    } else {
+        res.send("GetItem succeeded:", JSON.stringify(data, null, 2));
+    }
+  });
+}
+
+exports.deleteTable = function () {
+
+var params = {
+    TableName : "Lookup"
+};
+
+dynamodb.deleteTable(params, function(err, data) {
+    if (err) {
+        console.error("Unable to delete table. Error JSON:", JSON.stringify(err, null, 2));
+    } else {
+        console.log("Deleted table. Table description JSON:", JSON.stringify(data, null, 2));
+    }
+  });
 }

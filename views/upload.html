@@ -2,12 +2,22 @@
 <html>
 <body>
 <div id="contact">
-    <h1>Save a Name</h1>
+    <h2>Save a Name</h1>
   <form action="/name_url" method="post">
       <label for="param_name">Enter name: </label>
       <input name="param_name" type="text" value="Default name.">
       <label for="param_email">Enter email: </label>
       <input name="param_email" type="text" value="Default email.">
+      <input type="submit" value="OK">
+  </form>
+</div>
+&nbsp;
+<div>
+  <h2>Lookup a Name</h1>
+<div>
+  <form action="/lookup_url" method="post">
+      <label for="param_lookup_name">Lookup an Email: </label>
+      <input name="param_lookup_name" type="text">
       <input type="submit" value="OK">
   </form>
 </div>
