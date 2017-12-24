@@ -1,4 +1,7 @@
+var path    = require("path");
+
+
 
 exports.hello = function(req, res) {
-    res.send("hello 2");
+ res.sendFile(path.join(__dirname+'/../views/upload.html'));
 }
