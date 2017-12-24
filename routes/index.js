@@ -7,12 +7,13 @@ var service = require('../service/dynamoDbDao.js')
 router.use(bodyParser.urlencoded({ extended: true }));
 
 /* GET home page. */
-router.get('/test', function(req, res, next) {
+router.get('/', function(req, res, next) {
   csvApi.hello(req, res);
 });
 
 router.post('/name_url', function(req, res) {
-  res.send('You sent the name: "' + req.body.param_name + '".');
+  service.addToTable(req.body.param_name, req.body.param_email);
+  res.redirect('/');
 });
 
 router.get('/create_table', function(req, res, next) {

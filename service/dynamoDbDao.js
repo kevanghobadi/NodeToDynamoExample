@@ -6,6 +6,7 @@ AWS.config.update({
 });
 
 var dynamodb = new AWS.DynamoDB();
+var docClient = new AWS.DynamoDB.DocumentClient();
 
 var params = {
     TableName : "Lookup",
@@ -31,4 +32,22 @@ exports.createTable = function(req, res) {
           console.log("Created table. Table description JSON:", JSON.stringify(data, null, 2));
       }
     });
+}
+
+
+exports.addToTable = function(name, email) {
+  var params = {
+     TableName: "Lookup",
+     Item: {
+            "name": name,
+            "email": email
+          }
+  };
+  docClient.put(params, function(err, data) {
+      if (err) {
+          console.error("Unable to add record", name, ". Error JSON:", JSON.stringify(err, null, 2));
+      } else {
+          console.log("PutItem succeeded:", email);
+      }
+   });
 }
