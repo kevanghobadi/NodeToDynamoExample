@@ -8,7 +8,7 @@ Setup:
 3. Start the server with a npm run devstart (default in the application is port 3000)
 4. Create a dynamo table at: http://localhost:3000/create_table
 5. Interact with the table at http://localhost:3000/ through the gui
-6. Delete the table at http://localhost:3000/
+6. Delete the table at http://localhost:3000/delete_table
 
 
 Troubleshooting
